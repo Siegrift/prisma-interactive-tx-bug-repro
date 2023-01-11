@@ -4,8 +4,10 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 it('works', async () => {
   const before = Date.now()
-  const prisma = new PrismaClient()
+  const prisma = new PrismaClient({ log: ['query', 'info', 'warn'] })
 
+  // I first noticed the test failing when I ran it together with other tests. When I ran it standalone (e.g. with
+  // "it.only"), it worked. I managed to reliably reproduce this by repeating the same tests two times.
   await expect(
     prisma.$transaction(
       async (ctx) => {
