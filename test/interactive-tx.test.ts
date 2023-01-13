@@ -11,6 +11,7 @@ it('works with interactive transactions and triggers', async () => {
       await ctx.user.create({
         data: {
           email: 'askjkjas@assfg.com',
+          balance: 0,
         },
       })
     }),
@@ -21,6 +22,6 @@ it('works when using executeRaw', async () => {
   const prisma = new PrismaClient({ log: ['query', 'info', 'warn'] })
 
   await expect(prisma.$executeRaw`
-    INSERT INTO "User" ("email") VALUES ('askjkjas@assfg.com') RETURNING "User"."id";
-  `).rejects.toThrow('ERROR: Simulated trigger error')
+    INSERT INTO "public"."User" ("email","balance") VALUES ('xx@x.x',100);
+  `).rejects.toThrow('db error: ERROR: User field "balance" is inconsistent. Expected=0, actual=100')
 })

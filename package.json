@@ -15,6 +15,7 @@
     "typescript": "^4.9.4"
   },
   "scripts": {
-    "start": "yarn prisma migrate dev && yarn jest"
+    "start": "yarn prisma migrate reset --force && yarn jest",
+    "psql": "docker exec -it oev-relay-db psql -U postgres postgres"
   }
 }

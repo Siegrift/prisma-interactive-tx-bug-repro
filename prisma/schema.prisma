@@ -11,10 +11,12 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
-  posts Post[]
+  id      Int       @id @default(autoincrement())
+  email   String    @unique
+  name    String?
+  balance Int
+  posts   Post[]
+  Deposit Deposit[]
 }
 
 model Post {
@@ -24,4 +26,11 @@ model Post {
   published Boolean @default(false)
   author    User    @relation(fields: [authorId], references: [id])
   authorId  Int
+}
+
+model Deposit {
+  id     Int  @id @default(autoincrement())
+  amount Int
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
 }
